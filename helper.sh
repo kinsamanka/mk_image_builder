@@ -2,7 +2,7 @@
 
 install_deps(){
     apt-get update
-    apt-get install -y wget
+    apt-get install -y wget ca-certificates
 }
 start_multistrap(){
     # retry as apt-get sometimes fails on fetching archives
