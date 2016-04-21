@@ -66,7 +66,8 @@ configure_base(){
     # add user
     proot-helper sh << EOF
 adduser --disabled-password --gecos "${DEFUSR}" ${DEFUSR}
-usermod -a -G sudo,staff,kmem,plugdev,adm,dialout,cdrom,audio,video,games,users ${DEFUSR}
+usermod -a -G sudo,staff,kmem,plugdev,adm,dialout,cdrom,audio,video,games,users, \
+    netdev ${DEFUSR}
 echo -n ${DEFUSR}:${DEFPWD} | chpasswd
 EOF
 
