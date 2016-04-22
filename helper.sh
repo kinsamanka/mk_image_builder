@@ -2,7 +2,7 @@
 
 install_deps(){
     apt-get update
-    apt-get install -y python
+    apt-get install -y bmap-tools
 }
 start_multistrap(){
     # retry as apt-get sometimes fails on fetching archives
