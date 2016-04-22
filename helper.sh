@@ -1,5 +1,9 @@
 #!/bin/sh -ex
 
+install_deps(){
+    apt-get update
+    apt-get install -y python
+}
 start_multistrap(){
     # retry as apt-get sometimes fails on fetching archives
     for i in $(seq 5); do
@@ -99,6 +103,8 @@ cleanup(){
 ######################
 # Install starts here
 ######################
+
+install_deps
 
 # reuse rootfs if it exists
 if [ -f /work/cache/rootfs.tgz ]; then
