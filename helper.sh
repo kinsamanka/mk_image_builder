@@ -1,10 +1,33 @@
-#!/bin/sh -ex
+#!/bin/bash -ex
+
+# Retries a command on failure.
+# $1 - the max number of attempts
+# $2... - the command to run
+# http://fahdshariff.blogspot.sg/2014/02/retrying-commands-in-shell-scripts.html
+
+retry() {
+    local -r -i max_attempts="$1"; shift
+    local -r cmd="$@"
+    local -i attempt_num=1
+ 
+    until $cmd
+    do
+        if (( attempt_num == max_attempts ))
+        then
+            echo "Attempt $attempt_num failed and there are no more attempts left!"
+            return 1
+        else
+            echo "Attempt $attempt_num failed! Trying again in $attempt_num seconds..."
+            sleep $(( attempt_num++ ))
+        fi
+    done
+}
+
+export -f retry
 
 start_multistrap(){
     # retry as apt-get sometimes fails on fetching archives
-    for i in $(seq 5); do
-        multistrap -f /work/${CONF} -a ${ARCH} -d ${ROOTFS}  && break || sleep 30; 
-    done
+    retry 5 multistrap -f /work/${CONF} -a ${ARCH} -d ${ROOTFS}
     proot-helper sh -c "/var/lib/dpkg/info/dash.preinst install && \
         dpkg --configure -a || dpkg --configure -a"
 }
@@ -117,12 +140,12 @@ fi
 
 # run custom install
 if [ -f /work/${CUSTOM_APP} ]; then
-    sh -ex /work/${CUSTOM_APP}
+    /work/${CUSTOM_APP}
 fi
 
 cleanup
 
 # run custom image
 if [ -f /work/${CUSTOM_IMG} ]; then
-    sh -ex /work/${CUSTOM_IMG}
+    /work/${CUSTOM_IMG}
 fi

@@ -1,4 +1,4 @@
-#!/bin/sh -ex
+#!/bin/bash -ex
 
 UBOOT=u-boot-sunxi-with-spl.bin.gz
 IMAGE=${BOARD}-${VERSION}.img
