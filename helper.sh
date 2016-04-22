@@ -1,9 +1,5 @@
 #!/bin/sh -ex
 
-install_deps(){
-    apt-get update
-    apt-get install -y wget ca-certificates
-}
 start_multistrap(){
     # retry as apt-get sometimes fails on fetching archives
     for i in $(seq 5); do
@@ -104,12 +100,10 @@ cleanup(){
 # Install starts here
 ######################
 
-install_deps
-
 # reuse rootfs if it exists
-if [ -f /work/rootfs.tgz ]; then
+if [ -f /work/cache/rootfs.tgz ]; then
     mkdir -p ${ROOTFS}
-    tar xf /work/rootfs.tgz -C ${ROOTFS}
+    tar xf /work/cache/rootfs.tgz -C ${ROOTFS}
 else
     start_multistrap
 
@@ -118,7 +112,7 @@ else
     disable_daemons
     configure_base
 
-    tar czpf /work/rootfs.tgz -C ${ROOTFS} .
+    tar czpf /work/cache/rootfs.tgz -C ${ROOTFS} .
 fi
 
 # run custom install

@@ -47,4 +47,4 @@ losetup -d ${LOOPDEV}
 
 rm -f ${IMAGE}.bz2
 bzip2 -9 ${IMAGE}
-mv ${IMAGE}.bz2 /work
+mv ${IMAGE}.bz2 /work/images
