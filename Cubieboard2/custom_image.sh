@@ -1,8 +1,7 @@
 #!/bin/sh -ex
 
 UBOOT=u-boot-sunxi-with-spl.bin.gz
-BOARD=Cubieboard2
-IMAGE=${BOARD}-machinekit-1.0.img
+IMAGE=${BOARD}-${VERSION}.img
 SRC=https://d-i.debian.org/daily-images/armhf/daily/u-boot
 
 # download u-boot
@@ -10,7 +9,6 @@ wget ${SRC}/${BOARD}/${UBOOT}
 gunzip ${UBOOT}
 
 # create 4GB sparse file
-rm -f ${IMAGE}
 dd if=/dev/zero of=${IMAGE} count=0 bs=1 seek=3965190144
 
 # create partitions
@@ -45,8 +43,4 @@ losetup ${LOOPDEV} ${IMAGE}
 dd if=${UBOOT%.*} of=${LOOPDEV} bs=1024 seek=8
 losetup -d ${LOOPDEV}
 
-# create bmap
-bmaptool create ${IMAGE} -o ${IMAGE}.bmap
-
-bzip2 -9 ${IMAGE}
-mv ${IMAGE}.bz2 ${IMAGE}.bmap /work/images
+mv ${IMAGE} /work/images
