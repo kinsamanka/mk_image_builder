@@ -8,8 +8,8 @@ retry 5 proot-helper apt-get update
 retry 5 proot-helper apt-get -y upgrade
 
 # create fstab entry
-sh -c 'echo "/dev/mmcblk0p1\t/\text4\trelatime,errors=remount-ro\t0\t1" \
-    > ${ROOTFS}/etc/fstab'
+echo -e "/dev/mmcblk0p1\t/\text4\trelatime,errors=remount-ro\t0\t1" \
+    > ${ROOTFS}/etc/fstab
 
 # configure u-boot
 mkdir -p ${ROOTFS}/etc/flash-kernel

@@ -35,7 +35,7 @@ start_multistrap(){
 setup_etc(){
     #edit hostname
     echo ${HOSTNAME} > ${ROOTFS}/etc/hostname
-    echo '127.0.0.1\t'${HOSTNAME} >> ${ROOTFS}/etc/hosts
+    echo -e '127.0.0.1\t'${HOSTNAME} >> ${ROOTFS}/etc/hosts
 
     # edit network interface
     cat << EOF > ${ROOTFS}/etc/network/interfaces
