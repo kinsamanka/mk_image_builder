@@ -45,6 +45,8 @@ losetup ${LOOPDEV} ${IMAGE}
 dd if=${UBOOT%.*} of=${LOOPDEV} bs=1024 seek=8
 losetup -d ${LOOPDEV}
 
-rm -f ${IMAGE}.bz2
+# create bmap
+/work/bmap-tools/bmaptool create ${IMAGE} -o ${IMAGE}.bmap
+
 bzip2 -9 ${IMAGE}
-mv ${IMAGE}.bz2 /work/images
+mv ${IMAGE}.bz2 ${IMAGE}.bmap /work/images
