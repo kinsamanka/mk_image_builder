@@ -36,5 +36,5 @@ for board in ${BOARDS}; do
         create ${TOPDIR}/images/${board}-${VERSION}.img \
         -o ${TOPDIR}/images/${board}-${VERSION}.bmap
 
-    bzip2 -9 ${TOPDIR}/images/${board}-${VERSION}.img
+    bzip2 -9 -f ${TOPDIR}/images/${board}-${VERSION}.img
 done
